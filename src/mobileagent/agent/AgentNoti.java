@@ -51,9 +51,4 @@ public class AgentNoti extends Aglet{
         });
         frame.setVisible(true);
     }
-//    
-//    public static void main(String[] args) {
-//        AgentNoti an = new AgentNoti();
-//        an.GUI();
-//    }
 }

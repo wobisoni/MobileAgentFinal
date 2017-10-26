@@ -5,9 +5,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class ImageDemo extends JFrame {
+public class ShowImage extends JFrame {
 
-    public ImageDemo(BufferedImage bi) {
+    public ShowImage(BufferedImage bi) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(700, 450);//chieu rong va chieu cao cua frame
         setVisible(true);

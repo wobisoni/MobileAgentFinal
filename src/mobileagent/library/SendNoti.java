@@ -1,6 +1,6 @@
 package mobileagent.library;
 
-import mobileagent.render.IpTableModel;
+import mobileagent.render.HostTableModel;
 import com.ibm.aglet.Aglet;
 import com.ibm.aglet.AgletProxy;
 import java.net.URL;
@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import mobileagent.bean.Host;
 
 public class SendNoti {
-    IpTableModel ipModel;
+    HostTableModel ipModel;
     ExecutorService executor;
     Aglet aglet;
     int temp = 0;
@@ -17,7 +17,7 @@ public class SendNoti {
     final int port;
     String noti;
 
-    public SendNoti(Aglet aglet, IpTableModel ipModel) {
+    public SendNoti(Aglet aglet, HostTableModel ipModel) {
         this.ipModel = ipModel;
         this.aglet = aglet;
         this.threads = 64;

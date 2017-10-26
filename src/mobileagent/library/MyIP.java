@@ -1,11 +1,13 @@
 package mobileagent.library;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.ServerSocket;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-public class getMyIP {
+public class MyIP {
     public static String getMyIp() {
         try {
             Enumeration<NetworkInterface> NICs = NetworkInterface.getNetworkInterfaces();
@@ -27,7 +29,9 @@ public class getMyIP {
         return null;
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println(getMyIp());
+        ServerSocket sc1 = new ServerSocket(4434);
+        ServerSocket sc2 = new ServerSocket(4435);
     }
 }

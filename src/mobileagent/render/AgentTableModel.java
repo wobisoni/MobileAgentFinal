@@ -8,15 +8,16 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-public class AgletTableModel extends AbstractTableModel{
-    String[] header;
-    ArrayList<Agent>  arAgent;
+public class AgentTableModel extends AbstractTableModel{
+    String[] tableHeader;
+    ArrayList<Agent>  listAgent;
     JTable table;
 
-    public AgletTableModel(JTable table, ArrayList<Agent> arAgent) {
-         this.header = new String [] { "ID","Name"," IP Address", "Create time" };
-         this.arAgent = arAgent;
-         this.table = table;
+    public AgentTableModel(JTable table, ArrayList<Agent> listAgent) {
+        this.tableHeader = new String [] { "ID","Name"," IP Address", "Create time" };
+        this.listAgent = listAgent;
+        this.table = table;
+        loadTable();
     }
     
     public void loadTable() {
@@ -32,56 +33,56 @@ public class AgletTableModel extends AbstractTableModel{
     }
     
     public int getRowCount() {
-         return arAgent.size();
+         return listAgent.size();
     }
 
     public String getColumnName(int column) {
-         return header[column];
+         return tableHeader[column];
     }
 
     public int getColumnCount() {
-         return header.length;
+         return tableHeader.length;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object object = null;
         switch(columnIndex){
             case 0:
-                return arAgent.get(rowIndex).getaId();
+                return listAgent.get(rowIndex).getaId();
             case 1:
-                return arAgent.get(rowIndex).getaName();
+                return listAgent.get(rowIndex).getaName();
             case 2:
-                return arAgent.get(rowIndex).getaIp();
+                return listAgent.get(rowIndex).getaIp();
             case 3:
-                return arAgent.get(rowIndex).getaTime();
+                return listAgent.get(rowIndex).getaTime();
         }
         return object;
     }
     
     public Agent getObject(int index){
-        return arAgent.get(index);
+        return listAgent.get(index);
     }
     
     public void addRow(Agent agent){
-         arAgent.add(agent);
+         listAgent.add(agent);
          fireTableDataChanged();
          table.scrollRectToVisible(table.getCellRect(this.getRowCount()-1, 0, true));
     }
     
     public void updateRow(int index, Agent agent){
-         arAgent.set(index, agent);
+         listAgent.set(index, agent);
          fireTableDataChanged();
     }
     
     public void delRow(int index) throws InvalidAgletException{
-         arAgent.remove(index);
+         listAgent.remove(index);
          fireTableDataChanged();
     }
 
     public void updateInfo(Agent agent) {
-        for (int i = 0; i < arAgent.size(); i++){
-            if(((Agent)arAgent.get(i)).getaId().equals(agent.getaId())){
-                Agent ag = (Agent)arAgent.get(i);
+        for (int i = 0; i < listAgent.size(); i++){
+            if(((Agent)listAgent.get(i)).getaId().equals(agent.getaId())){
+                Agent ag = (Agent)listAgent.get(i);
                 ag.setaIp(agent.getaIp());
                 ag.setaProxy(agent.getaProxy());
                 ag.setaStatus(agent.getaStatus());

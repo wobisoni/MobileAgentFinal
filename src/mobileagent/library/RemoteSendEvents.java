@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import javax.swing.JPanel;
 
-class SendEvents implements KeyListener, MouseMotionListener, MouseListener{
+class RemoteSendEvents implements KeyListener, MouseMotionListener, MouseListener{
     private Socket socket = null;
     private JPanel panel = null;
     private PrintWriter writer = null;
@@ -18,7 +18,7 @@ class SendEvents implements KeyListener, MouseMotionListener, MouseListener{
     double w;
     double h;
 
-    SendEvents(Socket socket, JPanel panel, String width, String height){
+    RemoteSendEvents(Socket socket, JPanel panel, String width, String height){
         this.socket = socket;
         this.panel = panel;
         this.width = width;
