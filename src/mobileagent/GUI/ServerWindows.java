@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showInputDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import static javax.swing.UIManager.setLookAndFeel;
@@ -30,6 +29,7 @@ import mobileagent.library.ScanHostIP;
 import mobileagent.library.SendNoti;
 
 public class ServerWindows extends JFrame {
+
     private transient AgentServer serverAgent;
     private static ArrayList<Agent> listAgent;
     private static ArrayList<Host> listHost;
@@ -37,43 +37,42 @@ public class ServerWindows extends JFrame {
     private HostTableModel hostTableModel;
     private ScanHostIP scanIp;
     private String serverIp;
-    
+
     public ServerWindows() {
     }
 
     public ServerWindows(AgentServer aglet) {
         this.serverAgent = aglet;
-        
+
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         listAgent = new ArrayList();
         listHost = new ArrayList();
         serverIp = LibConfig.getMyIp();
-        
-        
+
         hostTableModel = new HostTableModel(tbListHost, listHost);
         hostTableModel.addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
-                try{
-                    setSystemInfo(hostTableModel.getObject(hostTableModel.getRowCount()-1));
-                }catch(Exception ex){
-                    
+                try {
+                    setSystemInfo(hostTableModel.getObject(hostTableModel.getRowCount() - 1));
+                } catch (Exception ex) {
+
                 }
             }
         });
-        
-        agentTableModel = new AgentTableModel(tbListAgent,listAgent);
+
+        agentTableModel = new AgentTableModel(tbListAgent, listAgent);
         agentTableModel.addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
-                try{
-                    setAgentInfo(agentTableModel.getObject(agentTableModel.getRowCount()-1));
-                }catch(Exception ex){
-                    
+                try {
+                    setAgentInfo(agentTableModel.getObject(agentTableModel.getRowCount() - 1));
+                } catch (Exception ex) {
+
                 }
             }
         });
-        
+
         scanIp = new ScanHostIP(serverIp, serverAgent, hostTableModel);
         try {
             scanIp.startScan();
@@ -94,7 +93,6 @@ public class ServerWindows extends JFrame {
         panel112 = new javax.swing.JPanel();
         spListHost = new javax.swing.JScrollPane();
         tbListHost = new javax.swing.JTable();
-        btnMove = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         panel13 = new javax.swing.JPanel();
         btnChat = new javax.swing.JButton();
@@ -147,9 +145,8 @@ public class ServerWindows extends JFrame {
 
         fcPath.setName("fcPath"); // NOI18N
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Mobile Agent Application");
-        setMaximumSize(new java.awt.Dimension(1026, 467));
         setName("Form"); // NOI18N
         setResizable(false);
 
@@ -197,7 +194,7 @@ public class ServerWindows extends JFrame {
         panel111.setLayout(panel111Layout);
         panel111Layout.setHorizontalGroup(
             panel111Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(spListAgent, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
+            .add(spListAgent, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
         );
         panel111Layout.setVerticalGroup(
             panel111Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -233,22 +230,6 @@ public class ServerWindows extends JFrame {
         });
         spListHost.setViewportView(tbListHost);
 
-        btnMove.setBackground(new java.awt.Color(255, 255, 255));
-        btnMove.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnMove.setIcon(new javax.swing.ImageIcon("C:\\aglets\\public\\mobileagent\\icon\\move.png")); // NOI18N
-        btnMove.setText("Move");
-        btnMove.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnMove.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnMove.setMaximumSize(new java.awt.Dimension(133, 59));
-        btnMove.setMinimumSize(new java.awt.Dimension(133, 59));
-        btnMove.setName("btnMove"); // NOI18N
-        btnMove.setPreferredSize(new java.awt.Dimension(135, 59));
-        btnMove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMoveActionPerformed(evt);
-            }
-        });
-
         btnUpdate.setBackground(new java.awt.Color(255, 255, 255));
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnUpdate.setIcon(new javax.swing.ImageIcon("C:\\aglets\\public\\mobileagent\\icon\\update.png")); // NOI18N
@@ -271,9 +252,7 @@ public class ServerWindows extends JFrame {
             panel112Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(spListHost, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, panel112Layout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
-                .add(btnMove, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(0, 141, Short.MAX_VALUE)
                 .add(btnUpdate, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
         panel112Layout.setVerticalGroup(
@@ -281,9 +260,7 @@ public class ServerWindows extends JFrame {
             .add(panel112Layout.createSequentialGroup()
                 .add(spListHost, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 343, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(panel112Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(btnUpdate, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(btnMove, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(btnUpdate, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 6, Short.MAX_VALUE))
         );
 
@@ -395,6 +372,7 @@ public class ServerWindows extends JFrame {
         panel1.add(panel11, java.awt.BorderLayout.CENTER);
 
         panel12.setName("panel12"); // NOI18N
+        panel12.setPreferredSize(new java.awt.Dimension(320, 400));
         panel12.setLayout(new java.awt.GridLayout(2, 1));
 
         panel121.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agent Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 13), new java.awt.Color(255, 0, 0))); // NOI18N
@@ -604,168 +582,137 @@ public class ServerWindows extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        int index = tbListAgent.getSelectedRow(); 
-        if(index!=-1){
+        int index = tbListAgent.getSelectedRow();
+        if (index != -1) {
             try {
                 agentTableModel.getObject(index).getaProxy().sendOnewayMessage(new Message("dispose"));
                 agentTableModel.delRow(index);
             } catch (Exception ex) {
                 System.err.println(ex);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Chọn một đối tượng agent!");
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnReDesktopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReDesktopActionPerformed
         int indexIP = tbListHost.getSelectedRow();
-        if(indexIP != -1){
+        if (indexIP != -1) {
             Host ipA = hostTableModel.getObject(indexIP);
-            if(ipA.getPlatform()==1){
+            if (ipA.getPlatform() == 1) {
                 try {
-                    //Thông tin Aglet
-                    String agentName = showInputDialog("Agent Name", "Agent");
-                    if(agentName!=null){
-                        agentName+=" (Remote)";
-                        String create_time = LibConfig.getCurrentTime();
-                        //Tạo thể hiện contex
-                        String remoteIP = ipA.getIp();
-                        AgletContext context = serverAgent.getAgletContext();
-                        //Tạo mới Aglet
-                        URL url = LibConfig.createAgletURL(ipA.getIp());
-                        System.out.println(url);
-                        int port = 6969 + Integer.parseInt(remoteIP.substring(remoteIP.lastIndexOf(".")+1, remoteIP.length()));
-                        Object object[] = new Object[]{serverAgent.getProxy(), remoteIP, port};
-                        AgletProxy aProxy = context.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentRemoteServer", object) ;
-                        AgletID aID = aProxy.getAgletID();
-                        System.out.println("Khoi tao aglet: "+aID);
-                        //Lưu vào mảng
-                        Agent objAgent = new Agent(aID, aProxy, agentName, create_time, aProxy.isActive()?"Active":"Invalid", ipA.getIp());
-                        agentTableModel.addRow(objAgent);
-                    }
-                }catch (Exception ex) {
+                    String create_time = LibConfig.getCurrentTime();
+                    String remoteIP = ipA.getIp();
+                    AgletContext context = serverAgent.getAgletContext();
+                    URL url = LibConfig.createAgletURL(ipA.getIp());
+                    System.out.println(url);
+                    int port = 6969 + Integer.parseInt(remoteIP.substring(remoteIP.lastIndexOf(".") + 1, remoteIP.length()));
+                    String agentName = "Aglet-" + port + " (Remote)";
+                    Object object[] = new Object[]{serverAgent.getProxy(), remoteIP, port};
+                    AgletProxy aProxy = context.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentRemoteServer", object);
+                    AgletID aID = aProxy.getAgletID();
+                    System.out.println("Khoi tao aglet: " + aID);
+                    Agent objAgent = new Agent(aID, aProxy, agentName, create_time, aProxy.isActive() ? "Active" : "Invalid", ipA.getIp());
+                    agentTableModel.addRow(objAgent);
+                } catch (Exception ex) {
                     System.err.println(ex);
                     System.out.println("Loi khi tao Aglets");
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
         }
     }//GEN-LAST:event_btnReDesktopActionPerformed
 
     private void btnCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaptureActionPerformed
         int indexIP = tbListHost.getSelectedRow();
-        if(indexIP != -1){
+        if (indexIP != -1) {
             Host ipA = hostTableModel.getObject(indexIP);
-            if(ipA.getPlatform()==1){
+            if (ipA.getPlatform() == 1) {
                 try {
                     //Thông tin Aglet
-                    String agentName = showInputDialog("Agent Name", "Agent");
-                    if(agentName!=null){
-                        agentName+=" (Capture)";
-                        String create_time = LibConfig.getCurrentTime();
-                        //Tạo thể hiện contex
-                        AgletContext context = serverAgent.getAgletContext();
-                        //Tạo mới Aglet
-                        URL url = LibConfig.createAgletURL(ipA.getIp());
-                        System.out.println(url);
-                        AgletProxy aProxy = context.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentCapture", serverAgent.getProxy()) ;
-                        AgletProxy dispatchProxy = aProxy.dispatch(url);
-                        AgletID aID = aProxy.getAgletID();
-                        System.out.println("Khoi tao aglet: "+aID);
-                        //Lưu vào mảng
-                        Agent objAgent = new Agent(aID, dispatchProxy, agentName, create_time, aProxy.isActive()?"Active":"Invalid", ipA.getIp());
-                        agentTableModel.addRow(objAgent);
-                    }
-                }catch (Exception ex) {
+                    String agentName = "Aglet-4434(Capture)";
+                    String create_time = LibConfig.getCurrentTime();
+                    //Tạo thể hiện contex
+                    AgletContext context = serverAgent.getAgletContext();
+                    //Tạo mới Aglet
+                    URL url = LibConfig.createAgletURL(ipA.getIp());
+                    System.out.println(url);
+                    AgletProxy aProxy = context.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentCapture", serverAgent.getProxy());
+                    AgletProxy dispatchProxy = aProxy.dispatch(url);
+                    AgletID aID = aProxy.getAgletID();
+                    System.out.println("Khoi tao aglet: " + aID);
+                    //Lưu vào mảng
+                    Agent objAgent = new Agent(aID, dispatchProxy, agentName, create_time, aProxy.isActive() ? "Active" : "Invalid", ipA.getIp());
+                    agentTableModel.addRow(objAgent);
+                } catch (Exception ex) {
                     System.err.println(ex);
                     System.out.println("Loi khi tao Aglets");
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
         }
     }//GEN-LAST:event_btnCaptureActionPerformed
 
     private void btnChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChatActionPerformed
-        int indexIP = tbListHost.getSelectedRow(); 
-        if(indexIP != -1){
+        int indexIP = tbListHost.getSelectedRow();
+        if (indexIP != -1) {
             final Host ipA = hostTableModel.getObject(indexIP);
-            final String port = JOptionPane.showInputDialog(this, "nhap cong");
-            if(ipA.getPlatform()==1){
-                new Thread(){
+            if (ipA.getPlatform() == 1) {
+                new Thread() {
                     @Override
                     public void run() {
                         try {
-//                            URL url = createURL(ipA.getIp());
-                            URL url = new URL("atp://"+ipA.getIp()+":"+port);
+                            URL url = new URL("atp://" + ipA.getIp() + ":" + LibConfig.AGLET_DEFAULT_PORT);
                             AgletProxy ap = serverAgent.getAgletContext().createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentChatServer", url);
                         } catch (Exception ex) {
                             System.err.println(ex);
                         }
                     }
                 }.start();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
         }
     }//GEN-LAST:event_btnChatActionPerformed
 
     private void btnSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSystemActionPerformed
-        int indexIP = tbListHost.getSelectedRow(); 
-        if(indexIP != -1){
+        int indexIP = tbListHost.getSelectedRow();
+        if (indexIP != -1) {
             Host ipA = hostTableModel.getObject(indexIP);
-            if(ipA.getPlatform()==1){
-                String [] action = { "Shutdown", "Restart", "Logout"};  
-                String input = (String)JOptionPane.showInputDialog (this,  "Choose an action",  " System ",  JOptionPane.QUESTION_MESSAGE,  null,  action, -1);
+            if (ipA.getPlatform() == 1) {
+                String[] action = {"Shutdown", "Restart", "Logout"};
+                String input = (String) JOptionPane.showInputDialog(this, "Choose an action", " System ", JOptionPane.QUESTION_MESSAGE, null, action, -1);
                 System.out.println(input);
-                if(input!= null){
+                if (input != null) {
                     int i = 0;
-                    for (; i <action.length; i++) {
-                        if(input.equals(action[i])) break;
+                    for (; i < action.length; i++) {
+                        if (input.equals(action[i])) {
+                            break;
+                        }
                     }
                     AgletContext ct = serverAgent.getAgletContext();
                     try {
-                        AgletProxy ap = ct.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentController" , String.valueOf(i));
+                        AgletProxy ap = ct.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentController", String.valueOf(i));
                         ap.dispatch(LibConfig.createAgletURL(ipA.getIp()));
                     } catch (Exception ex) {
                         System.err.println(ex);
                     }
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
         }
     }//GEN-LAST:event_btnSystemActionPerformed
-
-    private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
-        try {
-            int index = tbListAgent.getSelectedRow(); 
-            if(index!=-1){
-               Agent agent = (Agent)agentTableModel.getObject(index);   
-               String host = showInputDialog("IP Address", "localhost");
-               String aPort = showInputDialog("Port", "4434");
-               if((host!=null)&&(aPort!=null)){
-                    String remoteContext = "atp://"+host+":"+aPort;
-                    URL url = new URL(remoteContext);
-                    AgletProxy ap =  agent.getaProxy().dispatch(url);
-                    listAgent.get(index).setaProxy(ap);
-               }
-            }else{
-                JOptionPane.showMessageDialog(this, "Chọn một đối tượng agent!");
-            }
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
-    }//GEN-LAST:event_btnMoveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         scanIp.stopScan();
@@ -778,10 +725,10 @@ public class ServerWindows extends JFrame {
 
     private void btnNotiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotiActionPerformed
         JTextArea taNoti = new JTextArea(12, 35);
-        switch (JOptionPane.showConfirmDialog(this, new JScrollPane(taNoti), "Nhập thông báo",JOptionPane.CANCEL_OPTION)) {
+        switch (JOptionPane.showConfirmDialog(this, new JScrollPane(taNoti), "Nhập thông báo", JOptionPane.CANCEL_OPTION)) {
             case JOptionPane.OK_OPTION:
                 String noti = taNoti.getText().trim();
-                System.out.println("'"+noti+"'");
+                System.out.println("'" + noti + "'");
                 SendNoti sendNoti = new SendNoti(serverAgent, hostTableModel);
                 sendNoti.startSend(noti);
                 break;
@@ -791,8 +738,8 @@ public class ServerWindows extends JFrame {
     private void tbListAgentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListAgentMouseClicked
         int index = tbListAgent.getSelectedRow();
         Agent agent = agentTableModel.getObject(index);
-        for(Host host:listHost){
-            if(agent.getaIp().equals(host.getIp())){
+        for (Host host : listHost) {
+            if (agent.getaIp().equals(host.getIp())) {
                 setSystemInfo(host);
             }
         }
@@ -840,7 +787,6 @@ public class ServerWindows extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapture;
     private javax.swing.JButton btnChat;
-    private javax.swing.JButton btnMove;
     private javax.swing.JButton btnNoti;
     private javax.swing.JButton btnReDesktop;
     private javax.swing.JButton btnRemove;
@@ -898,33 +844,33 @@ public class ServerWindows extends JFrame {
     private javax.swing.JTable tbListAgent;
     private javax.swing.JTable tbListHost;
     // End of variables declaration//GEN-END:variables
-    
-    public void setAgentInfo(Agent agent){
-        lbAID.setText(": "+agent.getaId().toString()); // id
-        lbAName.setText(": "+agent.getaName());  // name
-        lbALocal.setText(": "+agent.getaIp());//"Server");
-        lbATime.setText(": "+agent.getaTime());//" time");
-        lbAStatus.setText(": "+agent.getaStatus());//" status");
-    }
-    
-    public void setSystemInfo(Host host){
-        lbSName.setText(": "+host.getName());
-        lbSOS.setText(": "+host.getOs());
-        lbSArch.setText(": "+host.getArch());
-        lbSVersion.setText(": "+host.getVersion());
-        lbSIP.setText(": "+host.getIp());
+
+    public void setAgentInfo(Agent agent) {
+        lbAID.setText(": " + agent.getaId().toString()); // id
+        lbAName.setText(": " + agent.getaName());  // name
+        lbALocal.setText(": " + agent.getaIp());//"Server");
+        lbATime.setText(": " + agent.getaTime());//" time");
+        lbAStatus.setText(": " + agent.getaStatus());//" status");
     }
 
-    public boolean checkClick(){
-        int index = tbListAgent.getSelectedRow(); 
-        if(index!=-1){
+    public void setSystemInfo(Host host) {
+        lbSName.setText(": " + host.getName());
+        lbSOS.setText(": " + host.getOs());
+        lbSArch.setText(": " + host.getArch());
+        lbSVersion.setText(": " + host.getVersion());
+        lbSIP.setText(": " + host.getIp());
+    }
+
+    public boolean checkClick() {
+        int index = tbListAgent.getSelectedRow();
+        if (index != -1) {
             return true;
         }
         JOptionPane.showMessageDialog(this, "Chọn một đối tượng agent!");
         return false;
     }
-    
-    public void addHostRow(Host host) {
-        hostTableModel.addRow(host);
+
+    public synchronized void add(Host objHost) {
+        hostTableModel.addRow(objHost);
     }
 }

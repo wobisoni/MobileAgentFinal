@@ -3,16 +3,17 @@ package mobileagent.bean;
 import com.ibm.aglet.*;
 import java.io.Serializable;
 
-public class Agent implements Serializable{
+public class Agent implements Serializable {
+
     private AgletID aId;
     private AgletProxy aProxy;
     private String aName;
     private String aTime;
     private String aStatus;
     private String aIp;
-    
+
     public Agent() {
-        
+
     }
 
     public Agent(AgletID aId, AgletProxy aProxy, String aName, String aTime, String aStatus, String aIp) {

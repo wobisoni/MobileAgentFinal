@@ -10,15 +10,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import javax.swing.JPanel;
 
-class RemoteSendEvents implements KeyListener, MouseMotionListener, MouseListener{
+class RemoteSendEvents implements KeyListener, MouseMotionListener, MouseListener {
+
     private Socket socket = null;
     private JPanel panel = null;
     private PrintWriter writer = null;
-    String width = "", height = "";
-    double w;
-    double h;
+    private String width = "", height = "";
+    private double w;
+    private double h;
 
-    RemoteSendEvents(Socket socket, JPanel panel, String width, String height){
+    RemoteSendEvents(Socket socket, JPanel panel, String width, String height) {
         this.socket = socket;
         this.panel = panel;
         this.width = width;
@@ -31,67 +32,67 @@ class RemoteSendEvents implements KeyListener, MouseMotionListener, MouseListene
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
 
-        try{
+        try {
             //Prepare PrintWriter which will be used to send commands to the client
             writer = new PrintWriter(socket.getOutputStream());
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void mouseDragged(MouseEvent e){
+    public void mouseDragged(MouseEvent e) {
     }
 
-    public void mouseMoved(MouseEvent e){
-        double xScale = (double)w/panel.getWidth();
-        double yScale = (double)h/panel.getHeight();
+    public void mouseMoved(MouseEvent e) {
+        double xScale = (double) w / panel.getWidth();
+        double yScale = (double) h / panel.getHeight();
         writer.println(Commands.MOVE_MOUSE.getAbbrev());
-        writer.println((int)(e.getX()*xScale));
-        writer.println((int)(e.getY()*yScale));
+        writer.println((int) (e.getX() * xScale));
+        writer.println((int) (e.getY() * yScale));
         writer.flush();
     }
 
-    public void mouseClicked(MouseEvent e){
+    public void mouseClicked(MouseEvent e) {
     }
 
-    public void mousePressed(MouseEvent e){
+    public void mousePressed(MouseEvent e) {
         writer.println(Commands.PRESS_MOUSE.getAbbrev());
         int button = e.getButton();
         int xButton = 16;
-        if(button==3){
+        if (button == 3) {
             xButton = 4;
         }
         writer.println(xButton);
         writer.flush();
     }
 
-    public void mouseReleased(MouseEvent e){
+    public void mouseReleased(MouseEvent e) {
         writer.println(Commands.RELEASE_MOUSE.getAbbrev());
         int button = e.getButton();
         int xButton = 16;
-        if(button==3){
-                xButton = 4;
+        if (button == 3) {
+            xButton = 4;
         }
         writer.println(xButton);
         writer.flush();
     }
 
-    public void mouseEntered(MouseEvent e){
+    public void mouseEntered(MouseEvent e) {
     }
 
-    public void mouseExited(MouseEvent e){
+    public void mouseExited(MouseEvent e) {
     }
 
-    public void keyTyped(KeyEvent e){
+    public void keyTyped(KeyEvent e) {
     }
 
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e) {
         writer.println(Commands.PRESS_KEY.getAbbrev());
         writer.println(e.getKeyCode());
         writer.flush();
     }
 
-    public void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e) {
         writer.println(Commands.RELEASE_KEY.getAbbrev());
         writer.println(e.getKeyCode());
         writer.flush();

@@ -9,8 +9,11 @@ import java.io.OutputStream;
 import java.net.*;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 
-public class AgentRemoteClient extends Aglet{
+public class AgentRemoteClient extends Aglet {
+
     private AgletProxy ap;
     private Rectangle rectangle;
     private Robot robot;
@@ -24,14 +27,14 @@ public class AgentRemoteClient extends Aglet{
     private String height;
     private Thread sendScreen;
     private Thread receiveEvents;
-    
+
     @Override
     public void onCreation(Object o) {
-        Object object[] = (Object[])o;
-        ap = (AgletProxy)object[0];
+        Object object[] = (Object[]) o;
+        ap = (AgletProxy) object[0];
         port = Integer.parseInt(object[1].toString());
-        
-        addMobilityListener(new MobilityAdapter(){
+
+        addMobilityListener(new MobilityAdapter() {
             @Override
             public void onArrival(MobilityEvent me) {
                 try {
@@ -41,15 +44,15 @@ public class AgentRemoteClient extends Aglet{
                     remote();
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                } 
-                
+                }
+
             }
         });
     }
 
     @Override
     public boolean handleMessage(Message msg) {
-        if(msg.sameKind("dispose")){
+        if (msg.sameKind("dispose")) {
             System.out.println("Huy tac tu remote client!");
             continueLoop = false;
             try {
@@ -63,14 +66,14 @@ public class AgentRemoteClient extends Aglet{
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }else{
+        } else {
             return false;
         }
         return true;
     }
 
     public void remote() {
-        try{
+        try {
             GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice gDev = gEnv.getDefaultScreenDevice();
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,53 +81,57 @@ public class AgentRemoteClient extends Aglet{
             height = String.valueOf(dim.getHeight());
             rectangle = new Rectangle(dim);
             robot = new Robot(gDev);
-            
+
             System.out.println("Awaiting Connection from AgletHost:");
             socket = serverSocket.accept();
-            
+
             dos = new DataOutputStream(socket.getOutputStream());
             dos.writeUTF(width);
             dos.writeUTF(height);
-            
-            sendScreen = new Thread("sendScreen"){
+
+            sendScreen = new Thread("sendScreen") {
                 public void run() {
                     sendScreen();
                 }
             };
             sendScreen.start();
-            
-            receiveEvents = new Thread("receiveEvents"){
+
+            receiveEvents = new Thread("receiveEvents") {
                 @Override
                 public void run() {
                     receiveEvents();
                 }
             };
             receiveEvents.start();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-    
-    public void sendScreen(){
-        while(continueLoop){
-            try{
+
+    public void sendScreen() {
+        ImageWriter writer = (ImageWriter) ImageIO.getImageWritersByFormatName("jpeg").next();
+        ImageWriteParam iwp = writer.getDefaultWriteParam();
+        iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        iwp.setCompressionQuality((float) 0.5);
+        while (continueLoop) {
+            try {
                 os = socket.getOutputStream();
                 BufferedImage bi = robot.createScreenCapture(rectangle);
-                ImageIO.write(bi,"jpeg",os);
+
+                ImageIO.write(bi, "jpeg", os);
                 Thread.sleep(10);
-            }catch(Exception ex){
-                continueLoop = false;
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
     }
-    
-    public void receiveEvents(){
+
+    public void receiveEvents() {
         try {
             Scanner scanner = new Scanner(socket.getInputStream());
-            while(continueLoop){
+            while (continueLoop) {
                 int command = scanner.nextInt();
-                switch(command){
+                switch (command) {
                     case -1:
                         robot.mousePress(scanner.nextInt());
                         break;
@@ -138,11 +145,11 @@ public class AgentRemoteClient extends Aglet{
                         robot.keyRelease(scanner.nextInt());
                         break;
                     case -5:
-                        robot.mouseMove(scanner.nextInt(),scanner.nextInt());
+                        robot.mouseMove(scanner.nextInt(), scanner.nextInt());
                         break;
                 }
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             continueLoop = false;
             ex.printStackTrace();
         }

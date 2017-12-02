@@ -14,37 +14,28 @@ import javax.imageio.ImageIO;
 import mobileagent.bean.Host;
 import mobileagent.library.LibConfig;
 
-public class AgentServer extends Aglet{
-    transient ServerWindows serverWindow;
-    String response;
-    transient AgletProxy remoteProxy = null;
-        
+public class AgentServer extends Aglet {
+
+    private transient ServerWindows serverWindow;
+    private transient AgletProxy remoteProxy = null;
+
     @Override
     public void onCreation(Object o) {
         serverWindow = new ServerWindows(this);
         serverWindow.setVisible(true);
     }
-    
-    @Override
-    public void run() {
-    }
-    
+
     public boolean handleMessage(Message msg) {
-        if (msg.sameKind("systemInfo")){
-            response = (String)msg.getArg();
-            new Thread(){
-                @Override
-                public void run() {
-                    String str[] = response.split("' '");
-                    Host host = new Host(str[0], str[1], str[2], str[3], str[4], 1);
-                    serverWindow.addHostRow(host);
-                }
-            }.start();
-        }else if(msg.sameKind("capture")){
+        if (msg.sameKind("systemInfo")) {
+            synchronized (this) {
+                Host host = (Host) msg.getArg();
+                serverWindow.add(host);
+            }
+        } else if (msg.sameKind("capture")) {
             try {
-                File  file = new File(LibConfig.IMAGE_PATH+System.nanoTime()+".jpg");
+                File file = new File(LibConfig.IMAGE_PATH + System.nanoTime() + ".png");
                 byte[] byteImage = (byte[]) msg.getArg();
-                System.out.println("bi "+byteImage);
+                System.out.println("bi " + byteImage);
                 InputStream inputStream = new ByteArrayInputStream(byteImage);
                 BufferedImage bi = ImageIO.read(inputStream);
                 ShowImage id = new ShowImage(bi);
@@ -52,8 +43,8 @@ public class AgentServer extends Aglet{
                 ImageIO.write(bi, "png", file);
             } catch (IOException ex) {
                 ex.printStackTrace();
-            } 
-        }else{
+            }
+        } else {
             return false;
         }
         return true;

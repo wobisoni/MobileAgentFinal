@@ -14,19 +14,21 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-public class AgentNoti extends Aglet{
-    String message;
+public class AgentNoti extends Aglet {
+
+    private String message;
+
     public void onCreation(Object o) {
-        message = (String)o;
-        addMobilityListener(new MobilityAdapter(){
+        message = (String) o;
+        addMobilityListener(new MobilityAdapter() {
             @Override
             public void onArrival(MobilityEvent me) {
                 GUI();
             }
         });
     }
-    
-    public void GUI(){
+
+    public void GUI() {
         JFrame frame = new JFrame();
         frame.setAlwaysOnTop(true);
         frame.setResizable(false);

@@ -5,19 +5,21 @@ import com.ibm.aglet.AgletProxy;
 import com.ibm.aglet.Message;
 import com.ibm.aglet.event.MobilityAdapter;
 import com.ibm.aglet.event.MobilityEvent;
+import mobileagent.bean.Host;
 
-public class AgentCheckPlatform extends Aglet{
-    AgletProxy ap;
-    String ip;
-    String name;
-    
+public class AgentCheckPlatform extends Aglet {
+
+    private AgletProxy serverAgletProxy;
+    private String localIp;
+    private String localName;
+
     @Override
     public void onCreation(Object o) {
-        Object obj[] = (Object[])o;
-        ap = (AgletProxy)obj[0];
-        ip = (String)obj[1];
-        name = (String)obj[2];
-        addMobilityListener(new MobilityAdapter(){
+        Object obj[] = (Object[]) o;
+        serverAgletProxy = (AgletProxy) obj[0];
+        localIp = (String) obj[1];
+        localName = (String) obj[2];
+        addMobilityListener(new MobilityAdapter() {
             public void onArrival(MobilityEvent me) {
                 sendSystemInfo();
                 try {
@@ -38,23 +40,23 @@ public class AgentCheckPlatform extends Aglet{
             ex.printStackTrace();
         }
     }
-    
-    public void sendSystemInfo(){
+
+    public void sendSystemInfo() {
         try {
             String os = System.getProperty("os.name");
-            if(os.toLowerCase().contains("window")){
+            if (os.toLowerCase().contains("window")) {
                 os = "Windows";
-            }else if(os.toLowerCase().contains("linux")){
+            } else if (os.toLowerCase().contains("linux")) {
                 os = "Linux";
-            }else if(os.toLowerCase().contains("mac")){
+            } else if (os.toLowerCase().contains("mac")) {
                 os = "Mac";
             }
             String architecture = System.getProperty("os.arch");
             String version = System.getProperty("os.version");
-            String response = ip+"' '"+name+"' '"+os+"' '"+architecture+"' '"+version;
-            Message msg = new Message("systemInfo", response);
-            System.out.println("agen: "+msg);
-            ap.sendOnewayMessage(msg);
+            Host host = new Host(localIp, localName, os, architecture, version, 1);
+            Message msg = new Message("systemInfo", host);
+            System.out.println("agen: " + msg);
+            serverAgletProxy.sendOnewayMessage(msg);
             dispose();
         } catch (Exception ex) {
         }
