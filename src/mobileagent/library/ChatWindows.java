@@ -20,12 +20,13 @@ import mobileagent.agent.AgentChatServer;
 import mobileagent.agent.AgentChatClient;
 
 public class ChatWindows extends JFrame implements ActionListener {
-    JTextArea text = new JTextArea();
-    JTextField input = new JTextField();
-    JScrollPane scroll;
-    AgentChatServer master = null;
-    AgentChatClient slave = null;
-    AgletProxy apClient;
+
+    private JTextArea text = new JTextArea();
+    private JTextField input = new JTextField();
+    private JScrollPane scroll;
+    private AgentChatServer master = null;
+    private AgentChatClient slave = null;
+    private AgletProxy apClient;
 
     public ChatWindows(AgentChatServer master) {
         super("Chat");
@@ -43,14 +44,14 @@ public class ChatWindows extends JFrame implements ActionListener {
         setLocation(scrSize.width - getWidth(), scrSize.height - toolHeight.bottom - getHeight());
     }
 
-    public void GUI(){
+    public void GUI() {
         this.setLayout(new BorderLayout());
         this.setSize(400, 250);
         scroll = new JScrollPane(text,
-            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         text.setBorder(new EmptyBorder(5, 10, 0, 0));
-        Font font = new Font("Arial", Font.BOLD,12);
+        Font font = new Font("Arial", Font.BOLD, 12);
         text.setFont(font);
         text.setEditable(false);
         DefaultCaret caret = (DefaultCaret) text.getCaret();
@@ -61,35 +62,35 @@ public class ChatWindows extends JFrame implements ActionListener {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 setVisible(false);
-            } 
+            }
         });
     }
-    
+
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == input) {
             String t = input.getText();
-            appendText("Me :\t"+t);
+            appendText("Me :\t" + t);
             if (master != null) {
-                if(apClient==null){
+                if (apClient == null) {
                     apClient = master.dispatchSlave();
                 }
                 master.sendText(t);
             } else if (slave != null) {
                 slave.sendText(t);
-            } 
+            }
             input.setText("");
-        } 
+        }
     }
 
     public void appendText(String str) {
-        int n = (int) Math.ceil((double)str.length()/50);
+        int n = (int) Math.ceil((double) str.length() / 50);
         String st = "";
-        for(int i=0;i<n;i++){
-            if(str.length()<=(i+1)*50){
-                st+= str.substring(i*50, str.length())+"\r\n";
-            }else{
-                st+= str.substring(i*50, (i+1)*50)+"\r\n\t";
+        for (int i = 0; i < n; i++) {
+            if (str.length() <= (i + 1) * 50) {
+                st += str.substring(i * 50, str.length()) + "\r\n";
+            } else {
+                st += str.substring(i * 50, (i + 1) * 50) + "\r\n\t";
             }
         }
         text.append(st + "\r\n");

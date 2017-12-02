@@ -2,7 +2,8 @@ package mobileagent.bean;
 
 import java.io.Serializable;
 
-public class Host implements Serializable{
+public class Host implements Serializable {
+
     private String ip;
     private String name;
     private String os;
