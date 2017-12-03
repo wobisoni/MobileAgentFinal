@@ -35,12 +35,6 @@
             <Property name="name" type="java.lang.String" value="menuSettings" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="mServerConf">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Server Config"/>
-                <Property name="name" type="java.lang.String" value="mServerConf" noResource="true"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mPathConf">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Edit File Path"/>
@@ -861,7 +855,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="3"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Design and code by Nguy&#x1ec5;n V&#x103;n Cao &amp; &#x110;o&#xe0;n Minh C&#x1b0;&#x1edd;ng"/>
+            <Property name="text" type="java.lang.String" value="Design and code by Nguyen Van Cao &amp; Doan Minh Cuong"/>
             <Property name="name" type="java.lang.String" value="lbbottom" noResource="true"/>
           </Properties>
         </Component>

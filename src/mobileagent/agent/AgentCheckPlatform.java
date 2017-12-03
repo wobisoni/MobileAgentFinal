@@ -5,40 +5,23 @@ import com.ibm.aglet.AgletProxy;
 import com.ibm.aglet.Message;
 import com.ibm.aglet.event.MobilityAdapter;
 import com.ibm.aglet.event.MobilityEvent;
+import java.net.InetAddress;
 import mobileagent.bean.Host;
 
 public class AgentCheckPlatform extends Aglet {
 
     private AgletProxy serverAgletProxy;
-    private String localIp;
-    private String localName;
 
     @Override
     public void onCreation(Object o) {
-        Object obj[] = (Object[]) o;
-        serverAgletProxy = (AgletProxy) obj[0];
-        localIp = (String) obj[1];
-        localName = (String) obj[2];
+        serverAgletProxy = (AgletProxy)o;
+        
         addMobilityListener(new MobilityAdapter() {
             public void onArrival(MobilityEvent me) {
+                System.out.println("Hello");
                 sendSystemInfo();
-                try {
-                    Thread.sleep(5000);
-                    dispose();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
             }
         });
-    }
-
-    public void run() {
-        try {
-            Thread.sleep(5000);
-            dispose();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
     }
 
     public void sendSystemInfo() {
@@ -49,13 +32,25 @@ public class AgentCheckPlatform extends Aglet {
             } else if (os.toLowerCase().contains("linux")) {
                 os = "Linux";
             } else if (os.toLowerCase().contains("mac")) {
-                os = "Mac";
+                os = "MacOS";
             }
+            InetAddress addr = InetAddress.getLocalHost();
+            String localName = addr.getHostName();
             String architecture = System.getProperty("os.arch");
             String version = System.getProperty("os.version");
-            Host host = new Host(localIp, localName, os, architecture, version, 1);
+            int vers = (int)(Float.parseFloat(version)*10);
+            switch (vers){
+                case 40: version = "Windows 95"; break;
+                case 41: version = "Windows 98"; break;
+                case 51: version = "Windows XP"; break;
+                case 60: version = "Windows vista"; break;
+                case 61: version = "Windows 7"; break;
+                case 62: version = "Windows 8/8.1/10"; break;
+            }
+            
+            Host host = new Host(addr.getHostAddress(), localName, os, architecture, version, 1);
             Message msg = new Message("systemInfo", host);
-            System.out.println("agen: " + msg);
+            
             serverAgletProxy.sendOnewayMessage(msg);
             dispose();
         } catch (Exception ex) {

@@ -6,8 +6,8 @@ import com.ibm.aglet.event.*;
 
 public class AgentChatClient extends Aglet {
 
-    private transient String name = "Unknown";
-    private transient ChatWindows window = null;
+    private String name = "Unknown";
+    private ChatWindows window = null;
     private AgletProxy masterProxy = null;
 
     public boolean handleMessage(Message msg) {

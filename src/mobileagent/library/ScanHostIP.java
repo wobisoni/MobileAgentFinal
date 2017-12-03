@@ -55,27 +55,38 @@ public class ScanHostIP {
 
     public void pingIP() {
         String currentIp = "";
-        synchronized (this) {
+//        synchronized (this) {
             currentIp = ip + temp;
             temp++;
-        }
+//        }
+
         try {
             InetAddress address = InetAddress.getByName(currentIp);
             if (address.isReachable(3000)) {
                 String hostname = address.getHostName();
+                AgletProxy agletpx = serverAglet.getAgletContext().createAglet(serverAglet.getCodeBase(), "mobileagent.agent.AgentCheckPlatform", serverAglet.getProxy());
+                
                 String urlcheck = "atp://" + currentIp + ":" + LibConfig.AGLET_DEFAULT_PORT;
                 URL url = new URL(urlcheck);
+
                 try {
-                    Object object[] = new Object[]{serverAglet.getProxy(), currentIp, hostname};
-                    AgletProxy agletpx = serverAglet.getAgletContext().createAglet(serverAglet.getCodeBase(), "mobileagent.agent.AgentCheckPlatform", object);
                     agletpx.dispatch(url);
-                } catch (AgletException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
                     Host host = new Host(currentIp, hostname, "", "", "", 0);
                     hostTableModel.addRow(host);
+                    agletpx.dispose();
                 }
             }
-        } catch (Exception ex) {
+        } catch (UnknownHostException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (AgletException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
         }
     }
 

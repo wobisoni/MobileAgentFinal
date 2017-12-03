@@ -59,8 +59,8 @@ public class RemoteWindows {
     }
 
     public void ReceiveScreen() {
-        try {
-            while (loop) {
+        while (loop) {
+            try {
                 byte[] bytes = new byte[1024 * 1024];
                 int count = 0;
                 do {
@@ -71,9 +71,9 @@ public class RemoteWindows {
 
                 Graphics graphics = panel.getGraphics();
                 graphics.drawImage(image, 0, 0, panel.getWidth(), panel.getHeight(), panel);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 

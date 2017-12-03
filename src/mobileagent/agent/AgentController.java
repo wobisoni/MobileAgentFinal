@@ -17,7 +17,6 @@ public class AgentController extends Aglet {
             public void onArrival(MobilityEvent me) {
                 switch (Integer.parseInt(cmd)) {
                     case 0:
-                        System.out.println("Shutdown PC");
                         shutdown();
                         break;
                     case 1:
@@ -38,15 +37,17 @@ public class AgentController extends Aglet {
 
     public void shutdown() {
         try {
-            Runtime.getRuntime().exec("shutdown -s -t 30 -c \"Your PC will shut down in 30s\"");
+            Runtime.getRuntime().exec("shutdown -s -t 5 -c \"Your PC will shut down in 5s\"");
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
     public void restart() {
         try {
-            Runtime.getRuntime().exec("shutdown -r -t 30 -c \"Your PC will restart in 30s\"");
+            Runtime.getRuntime().exec("shutdown -r -t 5 -c \"Your PC will restart in 5s\"");
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -54,6 +55,7 @@ public class AgentController extends Aglet {
         try {
             Runtime.getRuntime().exec("shutdown -l");
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

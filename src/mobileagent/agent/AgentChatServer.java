@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class AgentChatServer extends Aglet {
 
-    private transient AgletProxy remoteProxy = null;
+    private AgletProxy remoteProxy = null;
     private String name = "ADMIN";
     private URL url;
     private ChatWindows window = null;

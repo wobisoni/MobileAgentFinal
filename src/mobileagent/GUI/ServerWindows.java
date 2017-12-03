@@ -140,7 +140,6 @@ public class ServerWindows extends JFrame {
         menuFile = new javax.swing.JMenu();
         mClose = new javax.swing.JMenuItem();
         menuSettings = new javax.swing.JMenu();
-        mServerConf = new javax.swing.JMenuItem();
         mPathConf = new javax.swing.JMenuItem();
 
         fcPath.setName("fcPath"); // NOI18N
@@ -536,7 +535,7 @@ public class ServerWindows extends JFrame {
         panel2.setName("panel2"); // NOI18N
 
         lbbottom.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        lbbottom.setText("Design and code by Nguyễn Văn Cao & Đoàn Minh Cường");
+        lbbottom.setText("Design and code by Nguyen Van Cao & Doan Minh Cuong");
         lbbottom.setName("lbbottom"); // NOI18N
         panel2.add(lbbottom);
 
@@ -560,10 +559,6 @@ public class ServerWindows extends JFrame {
 
         menuSettings.setText("Settings");
         menuSettings.setName("menuSettings"); // NOI18N
-
-        mServerConf.setText("Server Config");
-        mServerConf.setName("mServerConf"); // NOI18N
-        menuSettings.add(mServerConf);
 
         mPathConf.setText("Edit File Path");
         mPathConf.setName("mPathConf"); // NOI18N
@@ -591,7 +586,7 @@ public class ServerWindows extends JFrame {
                 System.err.println(ex);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Chọn một đối tượng agent!");
+            JOptionPane.showMessageDialog(this, "Select one aglet!");
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
@@ -611,18 +606,16 @@ public class ServerWindows extends JFrame {
                     Object object[] = new Object[]{serverAgent.getProxy(), remoteIP, port};
                     AgletProxy aProxy = context.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentRemoteServer", object);
                     AgletID aID = aProxy.getAgletID();
-                    System.out.println("Khoi tao aglet: " + aID);
                     Agent objAgent = new Agent(aID, aProxy, agentName, create_time, aProxy.isActive() ? "Active" : "Invalid", ipA.getIp());
                     agentTableModel.addRow(objAgent);
                 } catch (Exception ex) {
                     System.err.println(ex);
-                    System.out.println("Loi khi tao Aglets");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
+                JOptionPane.showMessageDialog(this, "Platform is not setup");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
+            JOptionPane.showMessageDialog(this, "Choose a host!");
         }
     }//GEN-LAST:event_btnReDesktopActionPerformed
 
@@ -643,19 +636,17 @@ public class ServerWindows extends JFrame {
                     AgletProxy aProxy = context.createAglet(serverAgent.getCodeBase(), "mobileagent.agent.AgentCapture", serverAgent.getProxy());
                     AgletProxy dispatchProxy = aProxy.dispatch(url);
                     AgletID aID = aProxy.getAgletID();
-                    System.out.println("Khoi tao aglet: " + aID);
                     //Lưu vào mảng
                     Agent objAgent = new Agent(aID, dispatchProxy, agentName, create_time, aProxy.isActive() ? "Active" : "Invalid", ipA.getIp());
                     agentTableModel.addRow(objAgent);
                 } catch (Exception ex) {
                     System.err.println(ex);
-                    System.out.println("Loi khi tao Aglets");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
+                JOptionPane.showMessageDialog(this, "Platform is not setup");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
+            JOptionPane.showMessageDialog(this, "Choose a host!");
         }
     }//GEN-LAST:event_btnCaptureActionPerformed
 
@@ -676,10 +667,10 @@ public class ServerWindows extends JFrame {
                     }
                 }.start();
             } else {
-                JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
+                JOptionPane.showMessageDialog(this, "Platform is not setup");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
+            JOptionPane.showMessageDialog(this, "Choose a host!");
         }
     }//GEN-LAST:event_btnChatActionPerformed
 
@@ -707,10 +698,10 @@ public class ServerWindows extends JFrame {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Máy khách chưa cài đặt platform!");
+                JOptionPane.showMessageDialog(this, "Platform is not setup");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Chọn một máy khách!");
+            JOptionPane.showMessageDialog(this, "Choose a host!");
         }
     }//GEN-LAST:event_btnSystemActionPerformed
 
@@ -725,7 +716,7 @@ public class ServerWindows extends JFrame {
 
     private void btnNotiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotiActionPerformed
         JTextArea taNoti = new JTextArea(12, 35);
-        switch (JOptionPane.showConfirmDialog(this, new JScrollPane(taNoti), "Nhập thông báo", JOptionPane.CANCEL_OPTION)) {
+        switch (JOptionPane.showConfirmDialog(this, new JScrollPane(taNoti), "Message", JOptionPane.CANCEL_OPTION)) {
             case JOptionPane.OK_OPTION:
                 String noti = taNoti.getText().trim();
                 System.out.println("'" + noti + "'");
@@ -816,7 +807,6 @@ public class ServerWindows extends JFrame {
     private javax.swing.JLabel lbbottom;
     private javax.swing.JMenuItem mClose;
     private javax.swing.JMenuItem mPathConf;
-    private javax.swing.JMenuItem mServerConf;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuSettings;
@@ -866,10 +856,10 @@ public class ServerWindows extends JFrame {
         if (index != -1) {
             return true;
         }
-        JOptionPane.showMessageDialog(this, "Chọn một đối tượng agent!");
+        JOptionPane.showMessageDialog(this, "Select one agent!");
         return false;
     }
-
+ 
     public synchronized void add(Host objHost) {
         hostTableModel.addRow(objHost);
     }

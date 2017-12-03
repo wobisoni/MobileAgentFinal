@@ -11,11 +11,13 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class AgentCapture extends Aglet {
 
     private AgletProxy ap;
+    ByteArrayOutputStream outputStream;
 
     public void onCreation(Object o) {
         ap = (AgletProxy) o;
@@ -39,10 +41,12 @@ public class AgentCapture extends Aglet {
             Rectangle screenRect = new Rectangle(screenSize);
             Robot robot = new Robot();
             BufferedImage img = robot.createScreenCapture(screenRect);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            outputStream = new ByteArrayOutputStream();
             ImageIO.write(img, "png", outputStream);
             byte[] byteImage = outputStream.toByteArray();
+            System.out.println(ap.getAddress());
             ap.sendMessage(new Message("capture", byteImage));
+            dispose();
         } catch (Exception ex) {
             System.out.println(ex);
         }
