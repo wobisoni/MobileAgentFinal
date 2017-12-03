@@ -18,13 +18,8 @@ public class AgentChatClient extends Aglet {
             window.show();
             window.appendText(str);
             return true;
-        } else if (msg.sameKind("bye")) {
+        } else if (msg.sameKind("dispose")) {
             window.appendText("Bye Bye..");
-            try {
-                Thread.currentThread().sleep(3000);
-            } catch (Exception ex) {
-            }
-            msg.sendReply();
             dispose();
         }
         return false;
@@ -35,7 +30,6 @@ public class AgentChatClient extends Aglet {
         addMobilityListener(new MobilityAdapter() {
             public void onArrival(MobilityEvent ev) {
                 window = new ChatWindows(AgentChatClient.this);
-//                    window.pack();
                 window.show();
                 try {
                     name = System.getProperty("user.name");

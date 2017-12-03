@@ -1,7 +1,6 @@
 package mobileagent.render;
 
 import mobileagent.bean.Agent;
-import com.ibm.aglet.InvalidAgletException;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JComponent;
@@ -75,9 +74,9 @@ public class AgentTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public void delRow(int index) throws InvalidAgletException {
+    public void delRow(int index) {
         listAgent.remove(index);
-        fireTableDataChanged();
+        table.repaint();
     }
 
     public void updateInfo(Agent agent) {

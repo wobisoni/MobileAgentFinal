@@ -34,7 +34,7 @@ public class AgentNoti extends Aglet {
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         frame.setTitle("Tin nhắn từ máy chủ");
-        JTextArea taNoti = new JTextArea(12, 36);
+        JTextArea taNoti = new JTextArea(5, 25);
         taNoti.setBorder(new EmptyBorder(5, 15, 0, 0));
         taNoti.setEditable(false);
         frame.add(taNoti, BorderLayout.CENTER);

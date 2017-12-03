@@ -12,7 +12,7 @@ import java.util.Date;
 public class LibConfig {
 
     public static final int AGLET_DEFAULT_PORT = 4434;
-    public static String IMAGE_PATH = "F://TestPic";
+    public static String IMAGE_PATH = "F://TestPic//";
     public static String SERVER_IP = "";
 
     public static String getMyIp() {

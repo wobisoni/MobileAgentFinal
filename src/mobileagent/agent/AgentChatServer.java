@@ -30,6 +30,8 @@ public class AgentChatServer extends Aglet {
             window.show();
             window.appendText(str);
             return true;
+        } else if (msg.sameKind("dispose")) {
+            dispose();
         }
         return false;
     }
@@ -48,7 +50,7 @@ public class AgentChatServer extends Aglet {
 
         if (remoteProxy != null) {
             try {
-                remoteProxy.sendMessage(new Message("bye"));
+                remoteProxy.sendOnewayMessage(new Message("dispose"));
             } catch (AgletException ex) {
                 ex.printStackTrace();
             }

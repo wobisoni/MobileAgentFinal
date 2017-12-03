@@ -2,20 +2,18 @@ package mobileagent.library;
 
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class ShowImage extends JFrame {
+public class ImagePanel extends JPanel{
 
-    public ShowImage(BufferedImage bi) {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(700, 450);//chieu rong va chieu cao cua frame
+    public ImagePanel(BufferedImage bi) {
+        setSize(137, 77);//chieu rong va chieu cao cua frame
         setVisible(true);
-        this.setLocationRelativeTo(null);
-        setResizable(true);//cho mo rong frame bang chuot.true= cho phep.false khoa
         JLabel label = new JLabel();
         add(label);
         label.setSize(700, 450);
+        System.out.println("x : " + label.getSize().width + "y : " + label.getSize().height);
         setPicture(label, bi);
     }
 

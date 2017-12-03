@@ -51,7 +51,7 @@ public class ChatWindows extends JFrame implements ActionListener {
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         text.setBorder(new EmptyBorder(5, 10, 0, 0));
-        Font font = new Font("Arial", Font.BOLD, 12);
+        Font font = new Font("Arial", Font.PLAIN, 12);
         text.setFont(font);
         text.setEditable(false);
         DefaultCaret caret = (DefaultCaret) text.getCaret();

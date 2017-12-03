@@ -11,7 +11,6 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class AgentCapture extends Aglet {
@@ -29,7 +28,6 @@ public class AgentCapture extends Aglet {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-
             }
         });
     }
@@ -46,18 +44,17 @@ public class AgentCapture extends Aglet {
             byte[] byteImage = outputStream.toByteArray();
             System.out.println(ap.getAddress());
             ap.sendMessage(new Message("capture", byteImage));
-            dispose();
         } catch (Exception ex) {
             System.out.println(ex);
         }
     }
 
     public boolean handleMessage(Message msg) {
-        if (msg.sameKind("dispose")) {
+        if (msg.sameKind("capture")) {
+            capture();
+        } else if (msg.sameKind("dispose")) {
             System.out.println("Huy tac tu capture!");
             this.dispose();
-        } else {
-            return false;
         }
         return true;
     }

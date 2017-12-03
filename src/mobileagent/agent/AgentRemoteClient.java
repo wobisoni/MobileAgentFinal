@@ -53,7 +53,6 @@ public class AgentRemoteClient extends Aglet {
     @Override
     public boolean handleMessage(Message msg) {
         if (msg.sameKind("dispose")) {
-            System.out.println("Huy tac tu remote client!");
             continueLoop = false;
             try {
                 dos.close();
@@ -66,6 +65,7 @@ public class AgentRemoteClient extends Aglet {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            System.out.println("Huy tac tu remote client!");
         } else {
             return false;
         }
@@ -112,14 +112,14 @@ public class AgentRemoteClient extends Aglet {
         ImageWriter writer = (ImageWriter) ImageIO.getImageWritersByFormatName("jpeg").next();
         ImageWriteParam iwp = writer.getDefaultWriteParam();
         iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        iwp.setCompressionQuality((float) 0.5);
+        iwp.setCompressionQuality((float) 0.1);
         while (continueLoop) {
             try {
                 os = socket.getOutputStream();
                 BufferedImage bi = robot.createScreenCapture(rectangle);
 
                 ImageIO.write(bi, "jpeg", os);
-                Thread.sleep(10);
+                Thread.sleep(200);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -127,9 +127,10 @@ public class AgentRemoteClient extends Aglet {
     }
 
     public void receiveEvents() {
-        try {
-            Scanner scanner = new Scanner(socket.getInputStream());
-            while (continueLoop) {
+        while (continueLoop) {
+            try {
+                Scanner scanner = new Scanner(socket.getInputStream());
+
                 int command = scanner.nextInt();
                 switch (command) {
                     case -1:
@@ -148,10 +149,24 @@ public class AgentRemoteClient extends Aglet {
                         robot.mouseMove(scanner.nextInt(), scanner.nextInt());
                         break;
                 }
+            } catch (Exception ex) {
+                continueLoop = false;
+                ex.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void onDisposing() {
+        try {
+            dos.close();
+            os.close();
+            sendScreen.stop();
+            receiveEvents.stop();
+            socket.close();
+            serverSocket.close();
         } catch (Exception ex) {
-            continueLoop = false;
-            ex.printStackTrace();
+
         }
     }
 }

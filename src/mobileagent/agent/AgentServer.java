@@ -16,8 +16,7 @@ import mobileagent.library.LibConfig;
 
 public class AgentServer extends Aglet {
 
-    private transient ServerWindows serverWindow;
-    private transient AgletProxy remoteProxy = null;
+    private ServerWindows serverWindow;
 
     @Override
     public void onCreation(Object o) {
